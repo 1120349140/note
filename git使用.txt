@@ -8,6 +8,8 @@
 
 ​	git add *
 
+ git commit -m ""
+
 4.推送改动 	git push origin master
 
 ​	添加仓库：git remote add origin <server>
@@ -15,3 +17,4 @@
 ​	如果仓库已有文件，可使用 git pull --rebase origin master
 
 5.更新改动：git pull
+
