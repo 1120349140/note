@@ -1,0 +1,19 @@
+### 问题
+
+1. placeholder和value重合		【已解决：placeholder改用vue绑定】
+2. 登录验证JS部分重写
+3. 入库申请表图片上传js部分重写
+4. 登录页发起请求及带值
+5. 
+
+
+
+
+
+### 记录
+
+1.登录账号密码：15515515515		12345678
+
+2.测试服务器地址：192.168.1.160:8080
+
+3.POST请求：192.168.1.160:8080/api/sys/longstron/companyInfo/getCompanyInfo
