@@ -1,0 +1,17 @@
+### git使用常用操作
+
+1.初始化：git init
+
+2.检出仓库： git clone <地址>
+
+3.git add <filename> 
+
+​	git add *
+
+4.推送改动 	git push origin master
+
+​	添加仓库：git remote add origin <server>
+
+​	如果仓库已有文件，可使用 git pull --rebase origin master
+
+5.更新改动：git pull
