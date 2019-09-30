@@ -1,3 +1,5 @@
+# 千里之行始于足下
+
 ### 什么是DOM
 
 DOM(Document Object Model)的缩写，即文档对象模型，是针对XML并经过扩展用于HTML的应用程序编程接口(API)
@@ -5,3 +7,34 @@ DOM(Document Object Model)的缩写，即文档对象模型，是针对XML并经
 所以DOM本质上是一种接口(API),是专门操作网页内容的API标准
 
 DOM把整个页面映射为一个多层节点结构，HTML或XML页面中的每个组成部分都是某种类型的节点。借助DOM提供的API，开发人员可以删除，添加，替换或修改任何节点
+
+### jQuery对象
+
+jQuery对象就是通过jQuery包装DOM对象后产生的对象
+
+例如
+
+``` javascript
+$("#foo").html(); //获取id为foo的元素内的html代码。html()是jQuery里的方法  
+等同于
+document.getElementById("foo").innerHTML;
+```
+
+在jQuery对象中无法使用DOM对象的任何方法。
+
+### 解决jQuery和其他库的冲突
+
+1.jQuery库在其他库之后导入
+
+2.jQuery库在其他库之前导入
+
+
+
+### jQuery选择器
+
+完善的处理机制，即使用jQuery获取网页中不存在的元素也不会报错
+
+
+
+
+
