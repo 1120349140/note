@@ -17,3 +17,81 @@
 2.测试服务器地址：192.168.1.160:8080
 
 3.POST请求：192.168.1.160:8080/api/sys/longstron/companyInfo/getCompanyInfo
+
+
+
+### JS部分
+
+#### JSON.parse()
+
+通常用于与服务端交换数据，可以用此方法将数据转换为JavaScript对象
+
+语法：JSON.parse({})
+
+#### JSON.stringify()
+
+将JavaScript值转换为JSON字符串，而JSON.parse()可以将JSON字符串转换为一个对象
+
+#### JS中typeof的用法
+
+一种运算符，两种使用方法，一种是对表达式做运算，一种是对变量做运算
+
+示例：
+
+​    console.log(typeof a);    //'undefined'
+
+​    console.log(typeof(true));  //'boolean'
+
+​    console.log(typeof '123');  //'string'
+
+​    console.log(typeof 123);   //'number'
+
+​    console.log(typeof NaN);   //'number'
+
+​    console.log(typeof null);  //'object'    
+
+### Vue与Android端调用方法
+
+![1570861914593](C:\Users\11203\AppData\Roaming\Typora\typora-user-images\1570861914593.png)
+
+![1570861939924](C:\Users\11203\AppData\Roaming\Typora\typora-user-images\1570861939924.png)
+
+以上均为调用Android端的方法，可由Android端传值
+
+注意两边方法名要一致
+
+
+
+### 如何带token访问页面
+
+在create：生命周期钩子中取得token
+
+在beforMount生命周期钩子中发起请求
+
+``` javascript
+beforeMount: function() {
+			const requestTask = uni.request({
+
+				// url: 'http://192.168.1.160:8080/api/longstron/filialeAccount/getFilialeBUProject/21001',
+				url: this.getIP + '/api/longstron/filialeAccount/getFilialeBUProject/' + this.getCompanyId,
+				method: 'POST',
+				data: {					
+					gridtype: "EXTJS",
+					pagination: false
+				},
+				header: {
+					'Authorization': this.token,
+					'Content-Type': 'application/json'
+				},
+				success: res => {
+					// 拿到请求的数据
+					this.projectList = JSON.parse(JSON.stringify(res.data.rows));
+				},
+				fail: res => {
+					console.log("数据请求失败")
+				},
+				complete: () => {}
+			});
+		}
+```
+
