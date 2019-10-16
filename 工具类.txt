@@ -37,3 +37,113 @@ RT
 随后在请求成功页面记得退出就好
 
 ![1570872696059](C:\Users\11203\AppData\Roaming\Typora\typora-user-images\1570872696059.png)
+
+
+
+#### 关于分页
+
+1.引入组件uniLoadMore并注册
+
+![1571102720243](C:\Users\11203\AppData\Roaming\Typora\typora-user-images\1571102720243.png)
+
+2.添加data
+
+![1571102762292](C:\Users\11203\AppData\Roaming\Typora\typora-user-images\1571102762292.png)
+
+3.引入对应的启动声明周期钩子
+
+``` javascript
+onLoad() {
+			// this.getBanner();
+			uni.showLoading({
+				title: '拼命加载中',
+			});
+			//从安卓获取token
+			// this.token = "bearer" + window.projectListToAndroid.getToken();
+			//获取ip
+			// this.getIP = window.projectListToAndroid.getIP();
+			//获取分公司id
+			// this.getCompanyId = window.projectListToAndroid.getCompanyId();
+			// projectListToAndroid:这里从Android端取值
+			this.token = "bearerc3ec33ef-7f2f-4f01-a0fb-e5cd4b0fc27b";
+			this.getList();
+		},
+		onPullDownRefresh() {
+			console.log("onPullDownRefresh")
+			this.reload = true;
+			this.last_id = '';
+			// this.getBanner();
+			this.getList();
+		},
+		onReachBottom() {
+			++this.pageNum;
+			console.log("onReachBottom")
+			this.status = 'more';
+			this.getList();
+		
+		},
+```
+
+4.数据添加
+
+```javascript
+getList() {
+				//这里的data对应请求中的data
+				var data = {
+					gridtype: "EXTJS",
+					pagination: true,
+					"page": this.pageNum,
+					// "start": " + (page - 1) * 8 + ",
+					"limit": 20
+				};
+				//对目前状态进行判断
+				if (this.last_id) {
+					//说明已有数据，目前处于上拉加载
+					this.status = 'loading';
+					data.minId = this.last_id;
+					data.time = new Date().getTime() + '';
+					data.pageSize = 10;
+				}
+				//发起请求
+				uni.request({
+					url: 'http://192.168.1.160:8080/api/longstron/filialeAccount/getFilialeBUCustomer/21001',
+					// url: this.getIP + '/api/longstron/filialeAccount/getFilialeBUCustomer/' + this.getCompanyId,
+					method: 'POST',
+					data: data,
+					header: {
+						'Authorization': this.token,
+						'Content-Type': 'application/json'
+					},
+					success: data => {
+						uni.hideLoading(); //关闭loading
+						this.isshow = true;
+						let list = this.setTime(JSON.parse(JSON.stringify(data.data.rows)));
+						this.customerList = this.reload ? list : this.customerList.concat(list);
+						this.last_id = list[list.length - 1].id;
+						this.reload = false;
+					},
+					fail: (data, code) => {
+						console.log('fail' + JSON.stringify(data));
+					},
+				});
+			},
+			setTime: function(items) {
+				var newItems = [];
+				//打印输出测试
+				// console.log("items" + items);
+				// console.log(JSON.stringify(items));
+				items.forEach(e => {
+					newItems.push({
+						// 以下修改字段
+						filialeBUName: e.filialeBUName,
+						customerCategory: e.customerCategory,
+					});
+					//打印输出测试
+					// console.log("e.filialeBUName" + e.filialeBUName);		
+				});
+				//打印输出测试
+				// console.log("newItems:"+JSON.stringify(newItems));
+				return newItems;
+			}
+```
+
