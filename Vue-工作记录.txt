@@ -95,3 +95,33 @@ beforeMount: function() {
 		}
 ```
 
+
+
+### Vue 解决底部设置为fixed的button随移动端键盘弹起
+
+1.定义相关变量
+
+```javascript
+// 底部
+isOriginHei: true, //显示或者隐藏button
+documentHeight: document.documentElement.clientHeight, //默认屏幕高度
+```
+
+2.添加一个舰艇页面高度变化的方法
+
+``` javascript
+mounted() {
+// window.onresize监听页面高度的变化,用来判断是否显示底部button
+window.onresize = () => {
+	return (() => {
+		if (this.documentHeight > document.documentElement.clientHeight) {
+						this.isOriginHei = false
+					} else {
+						this.isOriginHei = true
+					}
+				})()
+			}
+		},
+```
+
+3.在页面对应的地方添加事件绑定v-show即可
